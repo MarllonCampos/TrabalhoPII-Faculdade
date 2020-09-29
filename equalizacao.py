@@ -37,22 +37,15 @@ for index, elem in enumerate(lib['somaComAnteriores']):
 #     lib['kLinha'].append(ceil(elem * len(lib['intervalo']) -1))
 
 
-vetorInicial=str(vetorInicial)
-vetorInicial=( ( (vetorInicial.replace(', ','')) .replace('[','')) .replace(']',''))
-vetorFinal = vetorInicial[:]
-vetorDeControle = vetorFinal[:]
+vetorFinal = vetorInicial.copy()
+vetorDeControle = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 for index, elem in enumerate(lib['intervalo']):
-    for indexControle,elementoControle in enumerate(vetorDeControle):
-        if index == 0:
-            vetorDeControle = vetorDeControle.replace(str(elem),str(lib['kLinha'][index]))
-            vetorFinal = vetorDeControle[:]
-            print(vetorDeControle)
-        else:
-            if elementoControle == elem and elementoControle == vetorFinal[indexControle]:
-               vetorDeControle[i]=str(lib['kLinha'][index])
-
+    for i,e in enumerate(vetorFinal):
+        if e==elem and vetorDeControle[i]==0:
+           vetorFinal[i]=lib['kLinha'][index]
+           vetorDeControle[i]=1
                     
                     
-print(vetorDeControle)
+print(vetorFinal)
 
