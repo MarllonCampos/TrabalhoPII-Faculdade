@@ -1,51 +1,62 @@
-vetorInicial = [0, 0, 4, 6, 8, 8, 4, 7, 8, 9, 9, 4, 3, 2, 3, 8, 2, 2, 1, 0]
+import Utils
 
-qtdPixels = 20
-# qtdPixels = int(input('Quantos pixels você ira inserir? '))
-# for i in range(qtdPixels):
-#     vetorInicial.append(int(input('Qual o valor do pixel? ')))
+# vetorInicial = [0, 0, 4, 6, 8, 8, 4, 7, 8, 9, 9, 4, 3, 2, 3, 8, 2, 2, 1, 0]
+vetorInicial = []
+vetorDeControle = []
+mensagemDeInserção = ''
+variavelControle = 0
 
-menorValor = min(vetorInicial)
-maiorValor = max(vetorInicial)
-diferençaMaiorMenor = maiorValor - menorValor
 
-lib = {
-    'intervalo': [],
-    'qtdElemento': [],
-    'somaComAnteriores': [],
-    'Pk': [],
-    'kLinha': [1, 2, 3, 4, 5, 5, 6, 6, 8, 9]
-}
+Utils.imprimeInterface() # Informa para o usuário qual tecla sai do programa
 
-for i in range(menorValor, maiorValor + 1):
-    lib['intervalo'].append(i)
+while 1 != 0:
+    try:
+        qtdPixels = 0
+        qtdPixels = input('Quantos pixels você ira inserir? ')
+        resul=Utils.verificaNumericoInteiro(qtdPixels)
+        if resul==False:
+            saida=Utils.verificaSaida(qtdPixels)
+            if saida == True:
+                exit()
+        else:
+            qtdPixels = resul
+            break
+    except Exception as errorMesssage:
+        print(f'\033[31mERRO!: {errorMesssage}\033[m')
+        print(f'\033[1;34mAceitamos apenas numeros, por favor respeite\033[m')
+        print(f'\033[4;32mSaindo... Reinicie o Programa\033[m')
+        
 
-for i in lib['intervalo']:
-    lib['qtdElemento'].append(vetorInicial.count(i))
-
-for index, elem in enumerate(lib['qtdElemento']):
-    if index == 0:
-        lib['somaComAnteriores'].append(elem)
+while 1 != 0:
+    if len(vetorInicial) == qtdPixels:
+        break
     else:
-        lib['somaComAnteriores'].append(lib['somaComAnteriores'][index - 1] +
-                                        elem)
+        try:
+            valoresInseridos = 0    
+            valoresInseridos = input('Qual o valor do pixel? ')
+            saida  = Utils.verificaSaida(valoresInseridos)  
+            if saida:
+                exit()
+            if int(valoresInseridos) < 0 or int(valoresInseridos) > 255:
+                raise Exception("Insira um valor entre \033[34m0\033[m e \033[34m255\033[m")
+            vetorInicial.append(int(valoresInseridos))
+            vetorDeControle.append(0)
+            mensagemDeInserção += (f"{valoresInseridos} - ")
+            print(f'\033[32mNúmeros ja inserídos: {mensagemDeInserção}\033[m')
+            
+        except Exception as errorMesssage:
+            print(f'\033[31mERRO!: {errorMesssage}\033[m')
+            print(
+                f'\033[1;34mAceitamos apenas numeros, por favor respeite\033[m')
+            print(f'\033[32mNúmeros ja inserídos: {mensagemDeInserção}\033[m')
+    variavelControle += 1
 
-for index, elem in enumerate(lib['somaComAnteriores']):
-    lib['Pk'].append(elem / qtdPixels)
+ConjuntoDeValores = Utils.carregaBiblioteca(vetorInicial,qtdPixels)
 
-# for index,elem in enumerate(lib['Pk']):
-#     lib['kLinha'].append(ceil(elem * len(lib['intervalo']) -1))
+vetorEqualizado = Utils.geraNovoVetor(ConjuntoDeValores['intervalo'],ConjuntoDeValores['kLinha'],vetorInicial,vetorDeControle)
+
+print(f'O vetor de entrada é: \033[33m{vetorInicial}\033[m')
+print(f'O resultado do vetor equalizado é: \033[31m{vetorEqualizado}\033[m')
 
 
-vetorFinal = vetorInicial.copy()
-vetorDeControle = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
-for index, elem in enumerate(lib['intervalo']):
-    for i,e in enumerate(vetorFinal):
-        if e==elem and vetorDeControle[i]==0:
-           vetorFinal[i]=lib['kLinha'][index]
-           vetorDeControle[i]=1
-                    
-                    
-print(vetorFinal)
-
+y = y.replace('-')
